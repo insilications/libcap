@@ -12,6 +12,11 @@ BuildRequires:  grep
 BuildRequires:  attr-dev
 BuildRequires:  Linux-PAM-dev
 BuildRequires:  ldd
+BuildRequires: gcc-dev32
+BuildRequires: gcc-libgcc32
+BuildRequires: gcc-libstdc++32
+BuildRequires: glibc-dev32
+BuildRequires: glibc-libc32
 
 %description
 Library for manipulating POSIX capabilities.
@@ -23,6 +28,24 @@ Requires:       %{name} = %{version}
 Requires:       attr-dev
 
 %description dev
+Library for manipulating POSIX capabilities.
+
+%package lib32
+Summary:        Library for manipulating POSIX capabilities
+Group:          devel
+Requires:       %{name} = %{version}
+Requires:       attr-dev
+
+%description lib32
+Library for manipulating POSIX capabilities.
+
+%package dev32
+Summary:        Library for manipulating POSIX capabilities
+Group:          devel
+Requires:       %{name} = %{version}
+Requires:       attr-dev libcap-lib32
+
+%description dev32
 Library for manipulating POSIX capabilities.
 
 %package doc
@@ -43,11 +66,34 @@ Library for manipulating POSIX capabilities.
 %setup -q
 #%patch1 -p1
 %patch2 -p1
+pushd ..
+cp -a libcap-%{version} build32
+popd
 
 %build
 make %{?_smp_mflags} lib=%{_libdir} LIBATTR=yes PAM_CAP=yes INDENT= SYSTEM_HEADERS=%{_includedir} RAISE_SETFCAP=no
 
+pushd ../build32/
+export CFLAGS="$CFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+make %{?_smp_mflags} lib=/usr/lib32 LIBATTR=yes PAM_CAP=no INDENT= SYSTEM_HEADERS=%{_includedir} RAISE_SETFCAP=no CFLAGS="$CFLAGS -m32"
+popd
+
 %install
+pushd ../build32/
+export CFLAGS="$CFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+make install DESTDIR=%{buildroot} LIBDIR=/usr/lib32  prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no PAM_CAP=no
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do mv $i 32$i ; done
+popd
+fi
+popd
+
 make install DESTDIR=%{buildroot} LIBDIR=%{_libdir} prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no
 
 # library must have executable bits set for rpm4 ELF provides to work correctly
@@ -62,6 +108,10 @@ find %{buildroot} -name "*.a" -delete
 %{_includedir}/sys/capability.h
 %{_libdir}/libcap.so
 /usr/lib64/pkgconfig/*.pc
+
+%files dev32
+/usr/lib32/libcap.so
+
 
 %files doc
 %{_mandir}/man1/*.1
@@ -78,3 +128,5 @@ find %{buildroot} -name "*.a" -delete
 %{_libdir}/libcap.so.*
 %{_libdir}/security/pam_cap.so
 
+%files lib32
+/usr/lib32/libcap.so.*
