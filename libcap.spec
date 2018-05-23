@@ -1,3 +1,8 @@
+#
+# Please don't borrow from this package / spec file, this is not a good example
+#
+
+
 Name:           libcap
 Version:        2.25
 Release:        22
