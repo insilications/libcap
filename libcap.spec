@@ -1,6 +1,6 @@
 Name:           libcap
 Version:        2.25
-Release:        21
+Release:        22
 License:        GPL-2.0 BSD-3-Clause
 Summary:        Library for manipulating POSIX capabilities
 Url:            http://sites.google.com/site/fullycapable/
@@ -99,7 +99,8 @@ popd
 make install DESTDIR=%{buildroot} LIBDIR=%{_libdir} prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no
 
 # library must have executable bits set for rpm4 ELF provides to work correctly
-chmod 0755 %{buildroot}%{_libdir}/libcap.so.*
+chmod 0755 %{buildroot}/usr/lib64/libcap.so.*
+chmod 0755 %{buildroot}/usr/lib32/libcap.so.*
 
 find %{buildroot} -name "*.a" -delete
 
