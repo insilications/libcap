@@ -5,7 +5,7 @@
 
 Name:           libcap
 Version:        2.25
-Release:        22
+Release:        23
 License:        GPL-2.0 BSD-3-Clause
 Summary:        Library for manipulating POSIX capabilities
 Url:            http://sites.google.com/site/fullycapable/
@@ -41,7 +41,6 @@ Group:          devel
 Requires:       %{name} = %{version}
 Requires:       attr-dev
 Requires:       libcap
-Provides:	libcap.so.2
 
 %description lib32
 Library for manipulating POSIX capabilities.
