@@ -5,14 +5,13 @@
 
 Name:           libcap
 Version:        2.25
-Release:        23
+Release:        24
 License:        GPL-2.0 BSD-3-Clause
 Summary:        Library for manipulating POSIX capabilities
 Url:            http://sites.google.com/site/fullycapable/
 Group:          base
 Source0:         https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.25.tar.xz
-Patch1:         include-sys-xattr.patch
-Patch2:		cflags.patch
+Patch1:		cflags.patch
 BuildRequires:  grep
 BuildRequires:  attr-dev
 BuildRequires:  Linux-PAM-dev
@@ -70,8 +69,7 @@ Library for manipulating POSIX capabilities.
 
 %prep
 %setup -q
-#%patch1 -p1
-%patch2 -p1
+%patch1 -p1
 pushd ..
 cp -a libcap-%{version} build32
 popd
@@ -92,12 +90,8 @@ export CFLAGS="$CFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 make install DESTDIR=%{buildroot} LIBDIR=/usr/lib32  prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no PAM_CAP=no
-if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
-then
-pushd %{buildroot}/usr/lib32/pkgconfig
-for i in *.pc ; do mv $i 32$i ; done
-popd
-fi
+mkdir -p %{buildroot}/usr/lib32/pkgconfig
+install -m0644 libcap/libcap.pc %{buildroot}/usr/lib32/pkgconfig/32libcap.pc
 popd
 
 make install DESTDIR=%{buildroot} LIBDIR=%{_libdir} prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no
@@ -114,10 +108,11 @@ find %{buildroot} -name "*.a" -delete
 %files dev
 %{_includedir}/sys/capability.h
 %{_libdir}/libcap.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/pkgconfig/libcap.pc
 
 %files dev32
 /usr/lib32/libcap.so
+/usr/lib32/pkgconfig/32libcap.pc
 
 
 %files doc
