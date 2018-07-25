@@ -5,7 +5,7 @@
 
 Name:           libcap
 Version:        2.25
-Release:        24
+Release:        25
 License:        GPL-2.0 BSD-3-Clause
 Summary:        Library for manipulating POSIX capabilities
 Url:            http://sites.google.com/site/fullycapable/
@@ -91,7 +91,7 @@ export LDFLAGS="$LDFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 make install DESTDIR=%{buildroot} LIBDIR=/usr/lib32  prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no PAM_CAP=no
 mkdir -p %{buildroot}/usr/lib32/pkgconfig
-install -m0644 libcap/libcap.pc %{buildroot}/usr/lib32/pkgconfig/32libcap.pc
+install -m0644 libcap/libcap.pc %{buildroot}/usr/lib32/pkgconfig/
 popd
 
 make install DESTDIR=%{buildroot} LIBDIR=%{_libdir} prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no
@@ -112,7 +112,7 @@ find %{buildroot} -name "*.a" -delete
 
 %files dev32
 /usr/lib32/libcap.so
-/usr/lib32/pkgconfig/32libcap.pc
+/usr/lib32/pkgconfig/libcap.pc
 
 
 %files doc
