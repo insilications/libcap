@@ -4,13 +4,13 @@
 
 
 Name:           libcap
-Version:        2.25
+Version:        2.26
 Release:        25
 License:        GPL-2.0 BSD-3-Clause
 Summary:        Library for manipulating POSIX capabilities
 Url:            http://sites.google.com/site/fullycapable/
 Group:          base
-Source0:         https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.25.tar.xz
+Source0:         https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.26.tar.xz
 Patch1:		cflags.patch
 BuildRequires:  grep
 BuildRequires:  attr-dev
