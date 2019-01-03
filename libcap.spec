@@ -34,6 +34,15 @@ Requires:       attr-dev
 %description dev
 Library for manipulating POSIX capabilities.
 
+%package extras
+Summary:        Library for manipulating POSIX capabilities
+Group:          devel
+Requires:       %{name} = %{version}
+Requires:       attr-dev
+
+%description extras
+Library for manipulating POSIX capabilities.
+
 %package lib32
 Summary:        Library for manipulating POSIX capabilities
 Group:          devel
@@ -100,19 +109,18 @@ make install DESTDIR=%{buildroot} LIBDIR=/usr/lib64 prefix=/usr SBINDIR=/usr/bin
 chmod 0755 %{buildroot}/usr/lib64/libcap.so.*
 chmod 0755 %{buildroot}/usr/lib32/libcap.so.*
 
-find %{buildroot} -name "*.a" -delete
-
 #mkdir -p %{buildroot}/usr/lib64/pkgconfig/
 #mv %{buildroot}/usr/pkgconfig/libcap.pc %{buildroot}/usr/lib64/pkgconfig/
 
 %files dev
 /usr/include/sys/capability.h
-/usr/lib64/libcap.so
 /usr/lib64/pkgconfig/libcap.pc
+/usr/lib64/libcap.a
 
 %files dev32
 /usr/lib32/libcap.so
 /usr/lib32/pkgconfig/libcap.pc
+ /usr/lib32/libcap.a
 
 
 %files doc
@@ -129,6 +137,9 @@ find %{buildroot} -name "*.a" -delete
 %files
 /usr/lib64/libcap.so.*
 /usr/lib64/security/pam_cap.so
+
+%files extras
+/usr/lib64/libcap.so
 
 %files lib32
 /usr/lib32/libcap.so.*
