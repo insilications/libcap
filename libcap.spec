@@ -75,13 +75,13 @@ cp -a libcap-%{version} build32
 popd
 
 %build
-make %{?_smp_mflags} lib=%{_libdir} LIBATTR=yes PAM_CAP=yes INDENT= SYSTEM_HEADERS=%{_includedir} RAISE_SETFCAP=no
+make %{?_smp_mflags} lib=/usr/lib64 LIBATTR=yes PAM_CAP=yes INDENT= SYSTEM_HEADERS=/usr/include RAISE_SETFCAP=no
 
 pushd ../build32/
 export CFLAGS="$CFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
-make %{?_smp_mflags} lib=/usr/lib32 LIBATTR=yes PAM_CAP=no INDENT= SYSTEM_HEADERS=%{_includedir} RAISE_SETFCAP=no CFLAGS="$CFLAGS -m32"
+make %{?_smp_mflags} lib=/usr/lib32 LIBATTR=yes PAM_CAP=no INDENT= SYSTEM_HEADERS=/usr/include RAISE_SETFCAP=no CFLAGS="$CFLAGS -m32"
 popd
 
 %install
@@ -89,12 +89,12 @@ pushd ../build32/
 export CFLAGS="$CFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
-make install DESTDIR=%{buildroot} LIBDIR=/usr/lib32  prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no PAM_CAP=no
+make install DESTDIR=%{buildroot} LIBDIR=/usr/lib32  prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no PAM_CAP=no
 mkdir -p %{buildroot}/usr/lib32/pkgconfig
 install -m0644 libcap/libcap.pc %{buildroot}/usr/lib32/pkgconfig/
 popd
 
-make install DESTDIR=%{buildroot} LIBDIR=%{_libdir} prefix=%{_prefix} SBINDIR=%{_sbindir} RAISE_SETFCAP=no
+make install DESTDIR=%{buildroot} LIBDIR=/usr/lib64 prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no
 
 # library must have executable bits set for rpm4 ELF provides to work correctly
 chmod 0755 %{buildroot}/usr/lib64/libcap.so.*
@@ -106,8 +106,8 @@ find %{buildroot} -name "*.a" -delete
 #mv %{buildroot}/usr/pkgconfig/libcap.pc %{buildroot}/usr/lib64/pkgconfig/
 
 %files dev
-%{_includedir}/sys/capability.h
-%{_libdir}/libcap.so
+/usr/include/sys/capability.h
+/usr/lib64/libcap.so
 /usr/lib64/pkgconfig/libcap.pc
 
 %files dev32
@@ -116,19 +116,19 @@ find %{buildroot} -name "*.a" -delete
 
 
 %files doc
-%{_mandir}/man1/*.1
-%{_mandir}/man8/*.8
-%{_mandir}/man3/*.3
+/usr/share/man/man1/*.1
+/usr/share/man/man8/*.8
+/usr/share/man/man3/*.3
 
 %files bin
-%{_sbindir}/capsh
-%{_sbindir}/getpcaps
-%{_sbindir}/setcap
-%{_sbindir}/getcap
+/usr/bin/capsh
+/usr/bin/getpcaps
+/usr/bin/setcap
+/usr/bin/getcap
 
 %files
-%{_libdir}/libcap.so.*
-%{_libdir}/security/pam_cap.so
+/usr/lib64/libcap.so.*
+/usr/lib64/security/pam_cap.so
 
 %files lib32
 /usr/lib32/libcap.so.*
