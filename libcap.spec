@@ -5,7 +5,7 @@
 
 Name:           libcap
 Version:        2.26
-Release:        26
+Release:        27
 License:        GPL-2.0 BSD-3-Clause
 Summary:        Library for manipulating POSIX capabilities
 Url:            http://sites.google.com/site/fullycapable/
