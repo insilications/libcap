@@ -28,7 +28,7 @@ Library for manipulating POSIX capabilities.
 %package dev
 Summary:        Library for manipulating POSIX capabilities
 Group:          devel
-Requires:       %{name} = %{version}
+Requires:       libcap = %{version}
 Requires:       attr-dev
 
 %description dev
@@ -37,7 +37,7 @@ Library for manipulating POSIX capabilities.
 %package extras
 Summary:        Library for manipulating POSIX capabilities
 Group:          devel
-Requires:       %{name} = %{version}
+Requires:       libcap = %{version}
 Requires:       attr-dev
 
 %description extras
@@ -46,7 +46,7 @@ Library for manipulating POSIX capabilities.
 %package lib32
 Summary:        Library for manipulating POSIX capabilities
 Group:          devel
-Requires:       %{name} = %{version}
+Requires:       libcap = %{version}
 Requires:       attr-dev
 Requires:       libcap
 
@@ -56,7 +56,7 @@ Library for manipulating POSIX capabilities.
 %package dev32
 Summary:        Library for manipulating POSIX capabilities
 Group:          devel
-Requires:       %{name} = %{version}
+Requires:       libcap = %{version}
 Requires:       attr-dev libcap-lib32
 
 %description dev32
