@@ -1,0 +1,55 @@
+From 9023862ce51bf6f7390dc86e1b3aab503ecc936c Mon Sep 17 00:00:00 2001
+From: Auke Kok <auke-jan.h.kok@intel.com>
+Date: Tue, 10 Sep 2019 12:14:05 -0700
+Subject: [PATCH] Fix misc build issues.
+
+---
+ Make.Rules       | 2 +-
+ libcap/Makefile  | 4 ++--
+ pam_cap/Makefile | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Make.Rules b/Make.Rules
+index c066c14..b32db18 100644
+--- a/Make.Rules
++++ b/Make.Rules
+@@ -49,7 +49,7 @@ KERNEL_HEADERS := $(topdir)/libcap/include/uapi
+ IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
+ 
+ CC := gcc
+-CFLAGS := -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
++CFLAGS += -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+ BUILD_CC := $(CC)
+ BUILD_CFLAGS := $(CFLAGS) $(IPATH)
+ AR := ar
+diff --git a/libcap/Makefile b/libcap/Makefile
+index 28488ce..96b400c 100644
+--- a/libcap/Makefile
++++ b/libcap/Makefile
+@@ -66,8 +66,8 @@ install: all
+ 	mkdir -p -m 0755 $(FAKEROOT)$(INCDIR)/sys
+ 	install -m 0644 include/sys/capability.h $(FAKEROOT)$(INCDIR)/sys
+ 	mkdir -p -m 0755 $(FAKEROOT)$(LIBDIR)
+-	install -m 0644 $(STALIBNAME) $(FAKEROOT)$(LIBDIR)/$(STALIBNAME)
+-	install -m 0644 $(MINLIBNAME) $(FAKEROOT)$(LIBDIR)/$(MINLIBNAME)
++	install -m 0755 $(STALIBNAME) $(FAKEROOT)$(LIBDIR)/$(STALIBNAME)
++	install -m 0755 $(MINLIBNAME) $(FAKEROOT)$(LIBDIR)/$(MINLIBNAME)
+ 	ln -sf $(MINLIBNAME) $(FAKEROOT)$(LIBDIR)/$(MAJLIBNAME)
+ 	ln -sf $(MAJLIBNAME) $(FAKEROOT)$(LIBDIR)/$(LIBNAME)
+ ifeq ($(FAKEROOT),)
+diff --git a/pam_cap/Makefile b/pam_cap/Makefile
+index cc32fb6..78c27ce 100644
+--- a/pam_cap/Makefile
++++ b/pam_cap/Makefile
+@@ -17,7 +17,7 @@ install: all
+ 	install -m 0755 pam_cap.so $(FAKEROOT)$(LIBDIR)/security
+ 
+ pam_cap.so: pam_cap.o
+-	$(LD) $(LDFLAGS) -o pam_cap.so $< $(LDLIBS)
++	$(LD) $(CFLAGS) $(LDFLAGS) -o pam_cap.so $< $(LDLIBS)
+ 
+ pam_cap.o: pam_cap.c
+ 	$(CC) $(CFLAGS) $(IPATH) -c $< -o $@
+-- 
+2.23.0
+
