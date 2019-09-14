@@ -4,7 +4,7 @@
 #
 Name     : libcap
 Version  : 2.27
-Release  : 33
+Release  : 34
 URL      : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.27.tar.xz
 Source0  : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.27.tar.xz
 Summary  : capability library: includes libcap2 file caps, setcap, getcap and capsh
