@@ -4,7 +4,7 @@
 #
 Name     : libcap
 Version  : 2.27
-Release  : 35
+Release  : 36
 URL      : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.27.tar.xz
 Source0  : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.27.tar.xz
 Summary  : capability library: includes libcap2 file caps, setcap, getcap and capsh
@@ -108,7 +108,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568746590
+export SOURCE_DATE_EPOCH=1568746977
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -129,7 +129,7 @@ make  %{?_smp_mflags}  LIBATTR=yes PAM_CAP=yes INDENT= SYSTEM_HEADERS=/usr/inclu
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1568746590
+export SOURCE_DATE_EPOCH=1568746977
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libcap
 cp License %{buildroot}/usr/share/package-licenses/libcap/License
@@ -144,6 +144,10 @@ popd
 fi
 popd
 %make_install DESTDIR=%{buildroot} prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no
+## install_append content
+mkdir -p %{buildroot}/usr/lib32/pkgconfig
+sed 's/64/32/g' %{buildroot}/usr/lib64/pkgconfig/libcap.pc > %{buildroot}/usr/lib32/pkgconfig/libcap.pc
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -191,6 +195,7 @@ popd
 %files dev32
 %defattr(-,root,root,-)
 /usr/lib32/libcap.so
+/usr/lib32/pkgconfig/libcap.pc
 
 %files lib
 %defattr(-,root,root,-)

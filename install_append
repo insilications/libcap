@@ -1,0 +1,2 @@
+mkdir -p %{buildroot}/usr/lib32/pkgconfig
+sed 's/64/32/g' %{buildroot}/usr/lib64/pkgconfig/libcap.pc > %{buildroot}/usr/lib32/pkgconfig/libcap.pc
