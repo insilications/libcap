@@ -4,7 +4,7 @@
 #
 Name     : libcap
 Version  : 2.27
-Release  : 36
+Release  : 37
 URL      : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.27.tar.xz
 Source0  : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.27.tar.xz
 Summary  : capability library: includes libcap2 file caps, setcap, getcap and capsh
@@ -98,6 +98,7 @@ man components for the libcap package.
 
 %prep
 %setup -q -n libcap-2.27
+cd %{_builddir}/libcap-2.27
 %patch1 -p1
 pushd ..
 cp -a libcap-2.27 build32
@@ -108,14 +109,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568746977
+export SOURCE_DATE_EPOCH=1604441763
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}  LIBATTR=yes PAM_CAP=yes INDENT= SYSTEM_HEADERS=/usr/include RAISE_SETFCAP=no
 
@@ -129,11 +130,11 @@ make  %{?_smp_mflags}  LIBATTR=yes PAM_CAP=yes INDENT= SYSTEM_HEADERS=/usr/inclu
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1568746977
+export SOURCE_DATE_EPOCH=1604441763
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libcap
-cp License %{buildroot}/usr/share/package-licenses/libcap/License
-cp pam_cap/License %{buildroot}/usr/share/package-licenses/libcap/pam_cap_License
+cp %{_builddir}/libcap-2.27/License %{buildroot}/usr/share/package-licenses/libcap/1f65128ca2bb6715d81ca6c60f997c997d0ac69e
+cp %{_builddir}/libcap-2.27/pam_cap/License %{buildroot}/usr/share/package-licenses/libcap/bf77cfae0a77bd405578c6f49be4d672ef6ecdf7
 pushd ../build32/
 %make_install32 DESTDIR=%{buildroot} prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no DESTDIR=%{buildroot} LIBDIR=/usr/lib32 prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no PAM_CAP=no
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -210,8 +211,8 @@ sed 's/64/32/g' %{buildroot}/usr/lib64/pkgconfig/libcap.pc > %{buildroot}/usr/li
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/libcap/License
-/usr/share/package-licenses/libcap/pam_cap_License
+/usr/share/package-licenses/libcap/1f65128ca2bb6715d81ca6c60f997c997d0ac69e
+/usr/share/package-licenses/libcap/bf77cfae0a77bd405578c6f49be4d672ef6ecdf7
 
 %files man
 %defattr(0644,root,root,0755)
