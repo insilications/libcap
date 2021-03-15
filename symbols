@@ -9,6 +9,7 @@ libcap.so.2:cap_dup
 libcap.so.2:cap_free
 libcap.so.2:cap_from_name
 libcap.so.2:cap_from_text
+libcap.so.2:cap_func_launcher
 libcap.so.2:cap_get_ambient
 libcap.so.2:cap_get_bound
 libcap.so.2:cap_get_fd
