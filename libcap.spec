@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : libcap
-Version  : 2.49
-Release  : 301
-URL      : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.49.tar.xz
-Source0  : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.49.tar.xz
+Version  : 2.51
+Release  : 302
+URL      : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.51.tar.xz
+Source0  : https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.51.tar.xz
 Summary  : capability library: includes libcap2 file caps, setcap, getcap and capsh
 Group    : Development/Tools
 License  : GPL-2.0
@@ -29,7 +29,6 @@ BuildRequires : gcc-libubsan
 BuildRequires : gcc-locale
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
-BuildRequires : glibc-staticdev
 BuildRequires : grep
 BuildRequires : ldd
 BuildRequires : libgcc1
@@ -116,10 +115,10 @@ staticdev32 components for the libcap package.
 
 
 %prep
-%setup -q -n libcap-2.49
-cd %{_builddir}/libcap-2.49
+%setup -q -n libcap-2.51
+cd %{_builddir}/libcap-2.51
 pushd ..
-cp -a libcap-2.49 build32
+cp -a libcap-2.51 build32
 popd
 
 %build
@@ -128,7 +127,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622037856
+export SOURCE_DATE_EPOCH=1626950285
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -197,7 +196,7 @@ make test || :
 make sudotest || :
 
 %install
-export SOURCE_DATE_EPOCH=1622037856
+export SOURCE_DATE_EPOCH=1626950285
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32 DESTDIR=%{buildroot} prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no DESTDIR=%{buildroot} LIBDIR=/usr/lib32 prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no PAM_CAP=no
@@ -246,9 +245,9 @@ sed 's/64/32/g' %{buildroot}/usr/lib64/pkgconfig/libcap.pc > %{buildroot}/usr/li
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libcap.so.2
-/usr/lib64/libcap.so.2.49
+/usr/lib64/libcap.so.2.51
 /usr/lib64/libpsx.so.2
-/usr/lib64/libpsx.so.2.49
+/usr/lib64/libpsx.so.2.51
 
 %files lib32
 %defattr(-,root,root,-)
