@@ -1,11 +1,14 @@
+libcap.so.2:__so_start
 libcap.so.2:_libcap_strdup
 libcap.so.2:cap_clear
 libcap.so.2:cap_clear_flag
 libcap.so.2:cap_compare
 libcap.so.2:cap_copy_ext
 libcap.so.2:cap_copy_int
+libcap.so.2:cap_copy_int_check
 libcap.so.2:cap_drop_bound
 libcap.so.2:cap_dup
+libcap.so.2:cap_fill
 libcap.so.2:cap_free
 libcap.so.2:cap_from_name
 libcap.so.2:cap_from_text
@@ -39,6 +42,8 @@ libcap.so.2:cap_launcher_setuid
 libcap.so.2:cap_max_bits
 libcap.so.2:cap_mode_name
 libcap.so.2:cap_new_launcher
+libcap.so.2:cap_prctl
+libcap.so.2:cap_prctlw
 libcap.so.2:cap_reset_ambient
 libcap.so.2:cap_set_ambient
 libcap.so.2:cap_set_fd
@@ -57,6 +62,7 @@ libcap.so.2:cap_to_text
 libcap.so.2:capgetp
 libcap.so.2:capsetp
 libpsx.so.2:__psx_syscall
+libpsx.so.2:__so_start
 libpsx.so.2:__wrap_pthread_create
 libpsx.so.2:psx_load_syscalls
 libpsx.so.2:psx_syscall3
