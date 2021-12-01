@@ -1,5 +1,5 @@
 PKG_NAME := libcap
-URL = https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.52.tar.xz
+URL = https://mirrors.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.61.tar.xz
 ARCHIVES = 
 ARCHIVES_GIT = 
 
