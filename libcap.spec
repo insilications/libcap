@@ -5,15 +5,12 @@
 %define keepstatic 1
 Name     : libcap
 Version  : 2.61
-Release  : 403
+Release  : 501
 URL      : https://mirrors.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.61.tar.xz
 Source0  : https://mirrors.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.61.tar.xz
 Summary  : capability library: includes libcap2 file caps, setcap, getcap and capsh
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: libcap-bin = %{version}-%{release}
-Requires: libcap-lib = %{version}-%{release}
-Requires: libcap-man = %{version}-%{release}
 BuildRequires : Linux-PAM-dev
 BuildRequires : Linux-PAM-dev32
 BuildRequires : attr-dev
@@ -40,79 +37,6 @@ BuildRequires : libstdc++
 This is a library for getting and setting POSIX.1e (formerly POSIX 6)
 draft 15 capabilities.
 
-%package bin
-Summary: bin components for the libcap package.
-Group: Binaries
-
-%description bin
-bin components for the libcap package.
-
-
-%package dev
-Summary: dev components for the libcap package.
-Group: Development
-Requires: libcap-lib = %{version}-%{release}
-Requires: libcap-bin = %{version}-%{release}
-Provides: libcap-devel = %{version}-%{release}
-Requires: libcap = %{version}-%{release}
-
-%description dev
-dev components for the libcap package.
-
-
-%package dev32
-Summary: dev32 components for the libcap package.
-Group: Default
-Requires: libcap-lib32 = %{version}-%{release}
-Requires: libcap-bin = %{version}-%{release}
-Requires: libcap-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the libcap package.
-
-
-%package lib
-Summary: lib components for the libcap package.
-Group: Libraries
-
-%description lib
-lib components for the libcap package.
-
-
-%package lib32
-Summary: lib32 components for the libcap package.
-Group: Default
-
-%description lib32
-lib32 components for the libcap package.
-
-
-%package man
-Summary: man components for the libcap package.
-Group: Default
-
-%description man
-man components for the libcap package.
-
-
-%package staticdev
-Summary: staticdev components for the libcap package.
-Group: Default
-Requires: libcap-dev = %{version}-%{release}
-
-%description staticdev
-staticdev components for the libcap package.
-
-
-%package staticdev32
-Summary: staticdev32 components for the libcap package.
-Group: Default
-Requires: libcap-dev32 = %{version}-%{release}
-
-%description staticdev32
-staticdev32 components for the libcap package.
-
-
 %prep
 %setup -q -n libcap-2.61
 cd %{_builddir}/libcap-2.61
@@ -126,7 +50,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1638326687
+export SOURCE_DATE_EPOCH=1639124756
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -222,6 +146,7 @@ unset LDFLAGS
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
 export ASFLAGS="--32"
 export CFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -pipe -fPIC -march=native -mtune=native -m32 -mstackrealign"
+export ASMFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -pipe -fPIC -march=native -mtune=native -m32 -mstackrealign"
 export CXXFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -fvisibility-inlines-hidden -pipe -fPIC -march=native -mtune=native -m32 -mstackrealign"
 export FCFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -fvisibility-inlines-hidden -pipe -fPIC -march=native -mtune=native -m32 -mstackrealign"
 export FFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -fvisibility-inlines-hidden -pipe -fPIC -march=native -mtune=native -m32 -mstackrealign"
@@ -240,7 +165,7 @@ make test || :
 make sudotest || :
 
 %install
-export SOURCE_DATE_EPOCH=1638326687
+export SOURCE_DATE_EPOCH=1639124756
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32 DESTDIR=%{buildroot} prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no DESTDIR=%{buildroot} LIBDIR=/usr/lib32 prefix=/usr SBINDIR=/usr/bin RAISE_SETFCAP=no PAM_CAP=no
@@ -265,123 +190,3 @@ sed 's/64/32/g' %{buildroot}/usr/lib64/pkgconfig/libcap.pc > %{buildroot}/usr/li
 
 %files
 %defattr(-,root,root,-)
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/capsh
-/usr/bin/getcap
-/usr/bin/getpcaps
-/usr/bin/setcap
-
-%files dev
-%defattr(-,root,root,-)
-/usr/include/sys/capability.h
-/usr/include/sys/psx_syscall.h
-/usr/lib64/libcap.so
-/usr/lib64/libpsx.so
-/usr/lib64/pkgconfig/libcap.pc
-/usr/lib64/pkgconfig/libpsx.pc
-/usr/lib64/security/pam_cap.so
-
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libcap.so
-/usr/lib32/libpsx.so
-/usr/lib32/pkgconfig/32libcap.pc
-/usr/lib32/pkgconfig/32libpsx.pc
-/usr/lib32/pkgconfig/libcap.pc
-/usr/lib32/pkgconfig/libpsx.pc
-
-%files lib
-%defattr(-,root,root,-)
-/usr/lib64/libcap.so.2
-/usr/lib64/libcap.so.2.61
-/usr/lib64/libpsx.so.2
-/usr/lib64/libpsx.so.2.61
-
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/libcap.so.2
-/usr/lib32/libcap.so.2.61
-/usr/lib32/libpsx.so.2
-/usr/lib32/libpsx.so.2.61
-
-%files man
-%defattr(0644,root,root,0755)
-/usr/share/man/man1/capsh.1
-/usr/share/man/man3/cap_clear.3
-/usr/share/man/man3/cap_clear_flag.3
-/usr/share/man/man3/cap_compare.3
-/usr/share/man/man3/cap_copy_ext.3
-/usr/share/man/man3/cap_copy_int.3
-/usr/share/man/man3/cap_drop_bound.3
-/usr/share/man/man3/cap_dup.3
-/usr/share/man/man3/cap_fill.3
-/usr/share/man/man3/cap_fill_flag.3
-/usr/share/man/man3/cap_free.3
-/usr/share/man/man3/cap_from_name.3
-/usr/share/man/man3/cap_from_text.3
-/usr/share/man/man3/cap_func_launcher.3
-/usr/share/man/man3/cap_get_bound.3
-/usr/share/man/man3/cap_get_fd.3
-/usr/share/man/man3/cap_get_file.3
-/usr/share/man/man3/cap_get_flag.3
-/usr/share/man/man3/cap_get_mode.3
-/usr/share/man/man3/cap_get_pid.3
-/usr/share/man/man3/cap_get_proc.3
-/usr/share/man/man3/cap_get_secbits.3
-/usr/share/man/man3/cap_iab.3
-/usr/share/man/man3/cap_iab_compare.3
-/usr/share/man/man3/cap_iab_dup.3
-/usr/share/man/man3/cap_iab_fill.3
-/usr/share/man/man3/cap_iab_from_text.3
-/usr/share/man/man3/cap_iab_get_pid.3
-/usr/share/man/man3/cap_iab_get_proc.3
-/usr/share/man/man3/cap_iab_get_vector.3
-/usr/share/man/man3/cap_iab_init.3
-/usr/share/man/man3/cap_iab_set_proc.3
-/usr/share/man/man3/cap_iab_set_vector.3
-/usr/share/man/man3/cap_iab_to_text.3
-/usr/share/man/man3/cap_init.3
-/usr/share/man/man3/cap_launch.3
-/usr/share/man/man3/cap_launcher_callback.3
-/usr/share/man/man3/cap_launcher_set_chroot.3
-/usr/share/man/man3/cap_launcher_set_iab.3
-/usr/share/man/man3/cap_launcher_set_mode.3
-/usr/share/man/man3/cap_launcher_setgroups.3
-/usr/share/man/man3/cap_launcher_setuid.3
-/usr/share/man/man3/cap_mode.3
-/usr/share/man/man3/cap_mode_name.3
-/usr/share/man/man3/cap_new_launcher.3
-/usr/share/man/man3/cap_set_fd.3
-/usr/share/man/man3/cap_set_file.3
-/usr/share/man/man3/cap_set_flag.3
-/usr/share/man/man3/cap_set_mode.3
-/usr/share/man/man3/cap_set_proc.3
-/usr/share/man/man3/cap_set_secbits.3
-/usr/share/man/man3/cap_setgroups.3
-/usr/share/man/man3/cap_setuid.3
-/usr/share/man/man3/cap_size.3
-/usr/share/man/man3/cap_to_name.3
-/usr/share/man/man3/cap_to_text.3
-/usr/share/man/man3/capgetp.3
-/usr/share/man/man3/capsetp.3
-/usr/share/man/man3/libcap.3
-/usr/share/man/man3/libpsx.3
-/usr/share/man/man3/psx_syscall.3
-/usr/share/man/man3/psx_syscall3.3
-/usr/share/man/man3/psx_syscall6.3
-/usr/share/man/man8/captree.8
-/usr/share/man/man8/getcap.8
-/usr/share/man/man8/getpcaps.8
-/usr/share/man/man8/setcap.8
-
-%files staticdev
-%defattr(-,root,root,-)
-/usr/lib64/libcap.a
-/usr/lib64/libpsx.a
-
-%files staticdev32
-%defattr(-,root,root,-)
-/usr/lib32/libcap.a
-/usr/lib32/libpsx.a
