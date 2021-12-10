@@ -248,6 +248,8 @@ libblockdev
 libcanberra
 libcap-dev
 libcap-dev32
+libcap-staticdev
+libcap-staticdev32
 libchamplain
 libchamplain-dev
 libcroco
